@@ -2,7 +2,6 @@ import requests
 import logging
 from urllib3.util import Retry
 from requests.adapters import HTTPAdapter
-from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
@@ -30,10 +29,7 @@ class WebScraper:
             response = self.session.get(page_url, timeout=10)
             response.raise_for_status()
 
-            content = response.content
-            soup = BeautifulSoup(content, features='html.parser')
-
-            return soup
+            return response.content
         
         except requests.exceptions.RequestException as e:
             logger.error(f"An error occurred while downloading {page_url}: {e}")
